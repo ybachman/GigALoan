@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d4add522922d44a69c5b1d7476c4c99e" Name="Diagram1">
+        <EntityTypeShape EntityType="DB_42039_gigModel.CHLD_ClientImages" Width="1.5" PointX="8.25" PointY="15.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_42039_gigModel.CHLD_GigImages" Width="1.5" PointX="12.75" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_42039_gigModel.CHLD_StudentImages" Width="1.5" PointX="7.5" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_42039_gigModel.CHLD_StudentLoans" Width="1.5" PointX="7.5" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_42039_gigModel.CHLD_StudentReferences" Width="1.5" PointX="5.25" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_42039_gigModel.CORE_Clients" Width="1.5" PointX="6" PointY="15.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_42039_gigModel.CORE_GigAlerts" Width="1.5" PointX="8.25" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_42039_gigModel.CORE_Gigs" Width="1.5" PointX="10.5" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_42039_gigModel.CORE_Students" Width="1.5" PointX="5.25" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_42039_gigModel.LOG_Events" Width="1.5" PointX="9.75" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_42039_gigModel.SPRT_Colleges" Width="1.5" PointX="3" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_42039_gigModel.SPRT_GigCategories" Width="1.5" PointX="0.75" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_42039_gigModel.SPRT_GigTypes" Width="1.5" PointX="3" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_42039_gigModel.SPRT_LoanCompanies" Width="1.5" PointX="5.25" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_42039_gigModel.SPRT_Majors" Width="1.5" PointX="3" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_42039_gigModel.sysdiagram" Width="1.5" PointX="0.75" PointY="12.625" IsExpanded="true" />
+        <AssociationConnector Association="DB_42039_gigModel.FK_CORE_Clients_ClientID" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_42039_gigModel.FK_CORE_Gigs_GigID" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_42039_gigModel.FK_CORE_Students_StudentID" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_42039_gigModel.FK_CHLD_StudentLoans_CompanyID" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_42039_gigModel.FK_CHLD_StudentLoans_StudentID" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_42039_gigModel.FK_CHLD_StudentReferences_StudentID" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_42039_gigModel.FK_CHLD_StudentReferences_TypeID" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_42039_gigModel.FK_CORE_GigAlerts_ClientID" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_42039_gigModel.FK_CORE_GigAlerts_TypeID" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_42039_gigModel.FK_CORE_Gigs_AlertID" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_42039_gigModel.FK_CORE_Gigs_StudentID" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_42039_gigModel.FK_CORE_Students_CollegeID" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_42039_gigModel.FK_CORE_Students_MajorID" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_42039_gigModel.FK_SPRT_GigTypes_CategoryID" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_42039_gigModel.CHLD_StudentSkills" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
