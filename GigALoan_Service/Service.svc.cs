@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
 using GigALoan_Model;
+using GigALoan_DAL;
 
 namespace GigALoan_Service
 {
@@ -14,7 +15,7 @@ namespace GigALoan_Service
     {
         public List<DTO_CORE_GigAlert> FindAlertByID(DTO_CORE_GigAlert request)
         {
-            List<DTO_CORE_GigAlert> response = null;
+            List<DTO_CORE_GigAlert> results = new List<DTO_CORE_GigAlert>();
 
             using (GigALoan_DAL.DB_connection context = new GigALoan_DAL.DB_connection())
             {
@@ -24,8 +25,7 @@ namespace GigALoan_Service
 
                     foreach (var alert in alertList)
                     {
-                        response = new List<DTO_CORE_GigAlert>();
-                        response.Add(new DTO_CORE_GigAlert
+                        DTO_CORE_GigAlert result = new DTO_CORE_GigAlert
                         {
                             Active = (bool)alert.Active,
                             AlertID = alert.AlertID,
@@ -37,12 +37,158 @@ namespace GigALoan_Service
                             PaymentAmt = alert.PaymentAmt,
                             Title = alert.Title,
                             TypeID = alert.TypeID
-                        });
+                        };
+                        results.Add(result);
                     }
                 }
             }
 
-            return response;
+            return results;
+        }
+
+        public List<DTO_CORE_GigAlert> FindAlertsByPay(DTO_CORE_GigAlert request)
+        {
+            GigALoan_DAL.DB_connection context = new GigALoan_DAL.DB_connection();
+
+            List<DTO_CORE_GigAlert> results = new List<DTO_CORE_GigAlert>();
+
+            var alertList = context.CORE_GigAlerts.Where(ga => ga.PaymentAmt >= request.PaymentAmt);
+
+            foreach (CORE_GigAlerts alert in alertList)
+            {
+                DTO_CORE_GigAlert result = new DTO_CORE_GigAlert
+                {
+                    AlertID = alert.AlertID,
+                    TypeID = alert.TypeID,
+                    Title = alert.Title,
+                    Comment = alert.Comment
+                    /*TODO: Get Alert images(or at least the first) loaded as well*/
+                };
+                results.Add(result);
+            }
+
+            return results;
+        }
+
+        public List<DTO_CORE_GigAlert> FindAlertsByType(DTO_CORE_GigAlert request)
+        {
+            GigALoan_DAL.DB_connection context = new GigALoan_DAL.DB_connection();
+
+            List<DTO_CORE_GigAlert> results = new List<DTO_CORE_GigAlert>();
+
+            var alertList = context.CORE_GigAlerts.Where(ga => ga.SPRT_GigTypes.TypeID == request.TypeID);
+
+            foreach (CORE_GigAlerts alert in alertList)
+            {
+                DTO_CORE_GigAlert result = new DTO_CORE_GigAlert
+                {
+                    AlertID = alert.AlertID,
+                    TypeID = alert.TypeID,
+                    Title = alert.Title,
+                    Comment = alert.Comment
+                    /*TODO: Get Alert images(or at least the first) loaded as well*/
+                };
+                results.Add(result);
+            }
+
+            return results;
+        }
+
+        public List<DTO_CORE_Gig> FindGigByAlertID(DTO_CORE_GigAlert request)
+        {
+            List<DTO_CORE_Gig> results = new List<DTO_CORE_Gig>();
+
+            GigALoan_DAL.DB_connection context = new GigALoan_DAL.DB_connection();
+
+            var gigList = context.CORE_Gigs.Where(g => g.AlertID == request.AlertID).ToList();
+
+            foreach (CORE_Gigs gig in gigList)
+            {
+
+                DTO_CORE_Gig result = new DTO_CORE_Gig
+                {
+                    GigID = gig.GigID,
+                    StudentID = gig.StudentID,
+                    AlertID = gig.AlertID,
+                    DateAccepted = gig.DateAccepted,
+                    StudentComments = gig.StudentComments,
+                    ClientComments = gig.ClientComments
+                };
+                if (gig.DateClosed != null)
+                    result.DateClosed = (DateTime)gig.DateClosed;
+                if (gig.StudentRating != null)
+                    result.StudentRating = (double)gig.StudentRating;
+                if (gig.ClientRating != null)
+                    result.ClientRating = (double)gig.ClientRating;
+
+                results.Add(result);
+            }
+
+            return results;
+        }
+
+        public List<DTO_CORE_Gig> FindGigsByStudentID(DTO_CORE_Student request)
+        {
+            List<DTO_CORE_Gig> results = new List<DTO_CORE_Gig>();
+
+            GigALoan_DAL.DB_connection context = new GigALoan_DAL.DB_connection();
+
+            var gigList = context.CORE_Gigs.Where(g => g.StudentID == request.StudentID);
+
+            foreach (CORE_Gigs gig in gigList)
+            {
+                DTO_CORE_Gig result = new DTO_CORE_Gig
+                {
+                    GigID = gig.GigID,
+                    StudentID = gig.StudentID,
+                    AlertID = gig.AlertID,
+                    DateAccepted = gig.DateAccepted,
+                    StudentComments = gig.StudentComments,
+                    ClientComments = gig.ClientComments
+                };
+
+                if (gig.DateClosed != null)
+                    result.DateClosed = (DateTime)gig.DateClosed;
+                if (gig.StudentRating != null)
+                    result.StudentRating = (double)gig.StudentRating;
+                if (gig.ClientRating != null)
+                    result.ClientRating = (double)gig.ClientRating;
+
+                results.Add(result);
+            }
+            return results;
+        }
+
+        public List<DTO_CORE_Gig> FindGigsByClientID(DTO_CORE_Client request)
+        {
+            List<DTO_CORE_Gig> results = new List<DTO_CORE_Gig>();
+
+            GigALoan_DAL.DB_connection context = new GigALoan_DAL.DB_connection();
+
+            var gigList = context.CORE_Gigs.Where(g => g.CORE_GigAlerts.ClientID == request.ClientID);
+
+            foreach (CORE_Gigs gig in gigList)
+            {
+                DTO_CORE_Gig result = new DTO_CORE_Gig
+                {
+                    GigID = gig.GigID,
+                    StudentID = gig.StudentID,
+                    AlertID = gig.AlertID,
+                    DateAccepted = gig.DateAccepted,
+                    StudentComments = gig.StudentComments,
+                    ClientComments = gig.ClientComments
+                };
+
+                if (gig.DateClosed != null)
+                    result.DateClosed = (DateTime)gig.DateClosed;
+                if (gig.StudentRating != null)
+                    result.StudentRating = (double)gig.StudentRating;
+                if (gig.ClientRating != null)
+                    result.ClientRating = (double)gig.ClientRating;
+
+                results.Add(result);
+            }
+            return results;
         }
     }
 }
