@@ -114,6 +114,32 @@ namespace GigALoan_Service
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         public List<DTO_CORE_Student> GetStudentAccount(DTO_CORE_Student request)
         {
             GigALoan_DAL.DB_connection context = new GigALoan_DAL.DB_connection();
