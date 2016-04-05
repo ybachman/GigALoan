@@ -13,41 +13,25 @@ namespace GigALoan_Service
         [WebInvoke(Method = "POST", UriTemplate = "/FindAlertByID", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         List<DTO_CORE_GigAlert> FindAlertByID(DTO_CORE_GigAlert request);
 
+        [OperationContract]
+        [WebInvoke(Method = "POST", UriTemplate = "/FindAlertsByPay", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        List<DTO_CORE_GigAlert> FindAlertsByPay(DTO_CORE_GigAlert request);
 
+        [OperationContract]
+        [WebInvoke(Method = "POST", UriTemplate = "/FindAlertsByType", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        List<DTO_CORE_GigAlert> FindAlertsByType(DTO_CORE_GigAlert request);
 
+        [OperationContract]
+        [WebInvoke(Method = "POST", UriTemplate = "/FindGigByAlertID", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        List<DTO_CORE_Gig> FindGigByAlertID(DTO_CORE_GigAlert request);
 
+        [OperationContract]
+        [WebInvoke(Method = "POST", UriTemplate = "/FindGigsByStudentID", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        List<DTO_CORE_Gig> FindGigsByStudentID(DTO_CORE_Student request);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        [OperationContract]
+        [WebInvoke(Method = "POST", UriTemplate = "/FindGigsByClientID", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        List<DTO_CORE_Gig> FindGigsByClientID(DTO_CORE_Client request);
         [OperationContract]
         [WebInvoke(Method = "POST", UriTemplate = "/GetStudentAccount", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         List<DTO_CORE_Student> GetStudentAccount(DTO_CORE_Student request);
@@ -103,13 +87,5 @@ namespace GigALoan_Service
         [OperationContract]
         [WebInvoke(Method = "POST", UriTemplate = "/CreateGig", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         List<DTO_CORE_Gig> CreateGig(DTO_CORE_Gig request);
-
-
-
-
-
-
-
-
     }
 }
