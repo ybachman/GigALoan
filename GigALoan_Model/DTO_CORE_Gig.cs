@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace GigALoan_Model
 {
@@ -16,10 +17,28 @@ namespace GigALoan_Model
         public int StudentID { get; set; }
         [DataMember]
         public int AlertID { get; set; }
-        [DataMember]
+
         public DateTime DateAccepted { get; set; }
-        [DataMember]
+        [DataMember(Name = "DateAccepted")]
+        private string CreationDateForSerialization { get; set; }
+
+        [OnSerializing]
+        void OnSerializing(StreamingContext context)
+        {
+            this.CreationDateForSerialization = JsonConvert.SerializeObject(this.DateAccepted).Replace('"', ' ').Trim();
+            this.ClosingDateForSerialization = JsonConvert.SerializeObject(this.DateClosed).Replace('"', ' ').Trim();
+        }
+        [OnDeserialized]
+        void OnDeserialized(StreamingContext context)
+        {
+            this.DateAccepted = DateTime.Parse(this.CreationDateForSerialization);
+            this.DateClosed = DateTime.Parse(this.ClosingDateForSerialization);
+        }
+
         public DateTime DateClosed { get; set; }
+        [DataMember(Name = "DateClosed")]
+        private string ClosingDateForSerialization { get; set; }
+
         [DataMember]
         public double StudentRating { get; set; }
         [DataMember]

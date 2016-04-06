@@ -61,7 +61,13 @@ namespace GigALoan_Service
                     AlertID = alert.AlertID,
                     TypeID = alert.TypeID,
                     Title = alert.Title,
-                    Comment = alert.Comment
+                    Comment = alert.Comment,
+                    Active = (bool)alert.Active,
+                    ClientID = alert.ClientID,
+                    DateCreated = alert.DateCreated,
+                    Lat = alert.Lat,
+                    Long = alert.Long,
+                    PaymentAmt = alert.PaymentAmt
                     /*TODO: Get Alert images(or at least the first) loaded as well*/
                 };
                 results.Add(result);
@@ -85,7 +91,13 @@ namespace GigALoan_Service
                     AlertID = alert.AlertID,
                     TypeID = alert.TypeID,
                     Title = alert.Title,
-                    Comment = alert.Comment
+                    Comment = alert.Comment,
+                    Active = (bool)alert.Active,
+                    ClientID = alert.ClientID,
+                    DateCreated = alert.DateCreated,
+                    Lat = alert.Lat,
+                    Long = alert.Long,
+                    PaymentAmt = alert.PaymentAmt
                     /*TODO: Get Alert images(or at least the first) loaded as well*/
                 };
                 results.Add(result);
@@ -176,7 +188,7 @@ namespace GigALoan_Service
                     AlertID = gig.AlertID,
                     DateAccepted = gig.DateAccepted,
                     StudentComments = gig.StudentComments,
-                    ClientComments = gig.ClientComments
+                    ClientComments = gig.ClientComments                    
                 };
 
                 if (gig.DateClosed != null)
