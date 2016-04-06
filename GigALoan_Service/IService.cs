@@ -32,5 +32,60 @@ namespace GigALoan_Service
         [OperationContract]
         [WebInvoke(Method = "POST", UriTemplate = "/FindGigsByClientID", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         List<DTO_CORE_Gig> FindGigsByClientID(DTO_CORE_Client request);
+        [OperationContract]
+        [WebInvoke(Method = "POST", UriTemplate = "/GetStudentAccount", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        List<DTO_CORE_Student> GetStudentAccount(DTO_CORE_Student request);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", UriTemplate = "/GetClientAccount", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        List<DTO_CORE_Client> GetClientAccount(DTO_CORE_Client request);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", UriTemplate = "/GetCollegeByID", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        List<DTO_SPRT_College> GetCollegeByID(DTO_SPRT_College request);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", UriTemplate = "/GetColleges", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        List<DTO_SPRT_College> GetColleges();
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", UriTemplate = "/GetMajorByID", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        List<DTO_SPRT_Major> GetMajorByID(DTO_SPRT_Major request);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", UriTemplate = "/GetMajors", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        List<DTO_SPRT_Major> GetMajors();
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", UriTemplate = "/GetGigTypeByID", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        List<DTO_SPRT_GigType> GetGigTypeByID(DTO_SPRT_GigType request);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", UriTemplate = "/GetGigs", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        List<DTO_SPRT_GigType> GetGigs(DTO_SPRT_GigType request);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", UriTemplate = "/GetGigTypeByCategoryID", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        List<DTO_SPRT_GigType> GetGigTypeByCategoryID(DTO_SPRT_GigType request);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", UriTemplate = "/GetGigCategoryByID", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        List<DTO_SPRT_GigCategory> GetGigCategoryByID(DTO_SPRT_GigCategory request);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", UriTemplate = "/GetGigCategories", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        List<DTO_SPRT_GigCategory> GetGigCategories();
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", UriTemplate = "/GetLoanCompanyByID", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        List<DTO_SPRT_LoanCompany> GetLoanCompanyByID(DTO_SPRT_LoanCompany request);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", UriTemplate = "/GetGigLoanCompanies", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        List<DTO_SPRT_LoanCompany> GetGigLoanCompanies();
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", UriTemplate = "/CreateGig", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        List<DTO_CORE_Gig> CreateGig(DTO_CORE_Gig request);
     }
 }
