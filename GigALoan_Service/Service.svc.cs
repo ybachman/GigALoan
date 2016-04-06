@@ -538,5 +538,91 @@ namespace GigALoan_Service
             return returnObject;
         }
 
+        public List<DTO_CORE_Client> GetClientById(DTO_CORE_Client request)
+        {
+            GigALoan_DAL.DB_connection context = new DB_connection();
+
+            var resultList = context.CORE_Clients.Where(client => client.ClientID == request.ClientID).ToList();
+            List<DTO_CORE_Client> result = new List<DTO_CORE_Client>();
+
+            foreach (CORE_Clients client in resultList)
+            {
+                DTO_CORE_Client clientByName = new DTO_CORE_Client
+                {
+                    ClientID = client.ClientID,
+                    FirstName = client.FirstName,
+                    LastName = client.LastName,
+                    //DateJoined = client.DateJoined, DateJoined is killed currently due to weird issues
+                    Email = client.Email,
+                    Pass = client.Pass,
+                    Gender = client.Gender,
+                    PhoneNumber = client.PhoneNumber,
+                    Active = (bool)client.Active
+                };
+                result.Add(clientByName);
+            }
+
+            return result;
+            
+        }//end method GetClientById
+
+    //method used to get a client by their name
+        public List<DTO_CORE_Client> GetClientByName(DTO_CORE_Client request)
+    {
+        GigALoan_DAL.DB_connection context = new GigALoan_DAL.DB_connection();
+
+        var resultList = context.CORE_Clients.Where(client => client.FirstName == request.FirstName &&
+                                                   client.LastName == request.LastName).ToList();//FirstOrDefault();
+
+        List<DTO_CORE_Client> result = new List<DTO_CORE_Client>();
+
+        foreach (CORE_Clients client in resultList)
+        {
+            DTO_CORE_Client clientByName = new DTO_CORE_Client
+            {
+                ClientID = client.ClientID,
+                FirstName = client.FirstName,
+                LastName = client.LastName,
+                //DateJoined = client.DateJoined, DateJoined is killed currently due to weird issues
+                Email = client.Email,
+                Pass = client.Pass,
+                Gender = client.Gender,
+                PhoneNumber = client.PhoneNumber,
+                Active = (bool)client.Active
+            };
+            result.Add(clientByName);
+        }
+        return result;
+
+    }//end method GetClientByEmail
+
+        //method used to get a client by their email
+        public List<DTO_CORE_Client> GetClientByEmail(DTO_CORE_Client request)
+        {
+            DB_connection context = new DB_connection();
+
+            var resultList = context.CORE_Clients.Where(client => client.Email == request.Email).ToList();
+
+            List<DTO_CORE_Client> result = new List<DTO_CORE_Client>();
+
+            foreach (CORE_Clients client in resultList)
+            {
+                DTO_CORE_Client clientByName = new DTO_CORE_Client
+                {
+                    ClientID = client.ClientID,
+                    FirstName = client.FirstName,
+                    LastName = client.LastName,
+                    //DateJoined = client.DateJoined,
+                    Email = client.Email,
+                    Pass = client.Pass,
+                    Gender = client.Gender,
+                    PhoneNumber = client.PhoneNumber,
+                    Active = (bool)client.Active
+                };
+                result.Add(clientByName);
+            }
+
+            return result;
+        }//end method GetClientByEmail
     }
 }

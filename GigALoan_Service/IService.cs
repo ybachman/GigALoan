@@ -87,5 +87,17 @@ namespace GigALoan_Service
         [OperationContract]
         [WebInvoke(Method = "POST", UriTemplate = "/CreateGig", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         List<DTO_CORE_Gig> CreateGig(DTO_CORE_Gig request);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", UriTemplate = "/GetClientByID", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        List<DTO_CORE_Client> GetClientById(DTO_CORE_Client request);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", UriTemplate = "/GetClientByName", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        List<DTO_CORE_Client> GetClientByName(DTO_CORE_Client request);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", UriTemplate = "/GetClientByEmail", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        List<DTO_CORE_Client> GetClientByEmail(DTO_CORE_Client request);
     }
 }
