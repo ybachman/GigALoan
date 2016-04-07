@@ -624,5 +624,63 @@ namespace GigALoan_Service
 
             return result;
         }//end method GetClientByEmail
+
+        //method used to add a client to th
+        public DTO_CORE_Client AddClient(DTO_CORE_Client request)
+        {
+                DB_connection context = new DB_connection();
+
+                var outputParameter = new System.Data.Entity.Core.Objects.ObjectParameter("new_identity", typeof(int));
+
+                var id = context.proc_AddClient(request.FirstName, request.LastName, request.Email,
+                     request.Pass, request.Gender, request.PhoneNumber, outputParameter);
+
+                id = (int)outputParameter.Value;
+
+                if (id == -1)
+                {
+                    return null;//client is already in the system
+                }
+                else if(id >= 1 )
+                {
+                    return request;
+                }
+                else
+                {
+                    //issue adding client
+                    return null;
+                }           
+        }//end method AddClient 
+
+        public DTO_CORE_Student AddStudent(DTO_CORE_Student request)
+        {
+            DB_connection context = new DB_connection();
+
+            var outputParameter = new System.Data.Entity.Core.Objects.ObjectParameter("new_identity", typeof(int));
+
+            var id = context.proc_AddStudent(request.FirstName, request.LastName,
+            request.Email, request.Pass, request.MajorID, request.CollegeID,
+            request.Gender, request.Employed, request.Employer, request.PhoneNumber,
+            outputParameter);
+
+            id = (int)outputParameter.Value;
+
+            if (id == -1)
+            {
+                return null;//client is already in the system
+            }
+            else if (id >= 1)
+            {
+                return request;
+            }
+            else
+            {
+                //issue adding client
+                return null;
+            }
+        }//end method AddStudent 
+
+
     }
 }
+
