@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System;
 using System.Runtime.Serialization;
-using System.Web.Script;
-using System.Web.Script.Serialization;
 using Newtonsoft.Json;
 
 namespace GigALoan_Model

@@ -540,29 +540,31 @@ namespace GigALoan_Service
 
         public List<DTO_CORE_Client> GetClientByID(DTO_CORE_Client request)
         {
-            GigALoan_DAL.DB_connection context = new DB_connection();
 
-            var resultList = context.CORE_Clients.Where(client => client.ClientID == request.ClientID).ToList();
-            List<DTO_CORE_Client> result = new List<DTO_CORE_Client>();
-
-            foreach (CORE_Clients client in resultList)
+            using (DB_connection context = new DB_connection())
             {
-                DTO_CORE_Client clientByName = new DTO_CORE_Client
-                {
-                    ClientID = client.ClientID,
-                    FirstName = client.FirstName,
-                    LastName = client.LastName,
-                    //DateJoined = client.DateJoined, DateJoined is killed currently due to weird issues
-                    Email = client.Email,
-                    Pass = client.Pass,
-                    Gender = client.Gender,
-                    PhoneNumber = client.PhoneNumber,
-                    Active = (bool)client.Active
-                };
-                result.Add(clientByName);
-            }
+                var resultList = context.CORE_Clients.Where(client => client.ClientID == request.ClientID).ToList();
+                List<DTO_CORE_Client> result = new List<DTO_CORE_Client>();
 
-            return result;
+                foreach (CORE_Clients client in resultList)
+                {
+                    DTO_CORE_Client clientByName = new DTO_CORE_Client
+                    {
+                        ClientID = client.ClientID,
+                        FirstName = client.FirstName,
+                        LastName = client.LastName,
+                        //DateJoined = client.DateJoined, DateJoined is killed currently due to weird issues
+                        Email = client.Email,
+                        Pass = client.Pass,
+                        Gender = client.Gender,
+                        PhoneNumber = client.PhoneNumber,
+                        Active = (bool)client.Active
+                    };
+                    result.Add(clientByName);
+                }
+
+                return result;
+            }
             
         }//end method GetClientById
 
