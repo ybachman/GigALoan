@@ -90,7 +90,7 @@ namespace GigALoan_Service
 
         [OperationContract]
         [WebInvoke(Method = "POST", UriTemplate = "/GetClientByID", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
-        List<DTO_CORE_Client> GetClientById(DTO_CORE_Client request);
+        List<DTO_CORE_Client> GetClientByID(DTO_CORE_Client request);
 
         [OperationContract]
         [WebInvoke(Method = "POST", UriTemplate = "/GetClientByName", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]

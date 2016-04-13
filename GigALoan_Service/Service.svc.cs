@@ -538,7 +538,7 @@ namespace GigALoan_Service
             return returnObject;
         }
 
-        public List<DTO_CORE_Client> GetClientById(DTO_CORE_Client request)
+        public List<DTO_CORE_Client> GetClientByID(DTO_CORE_Client request)
         {
             GigALoan_DAL.DB_connection context = new DB_connection();
 
