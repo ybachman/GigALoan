@@ -553,7 +553,7 @@ namespace GigALoan_Service
                         ClientID = client.ClientID,
                         FirstName = client.FirstName,
                         LastName = client.LastName,
-                        DateJoined = client.DateJoined,
+                        //DateJoined = client.DateJoined,
                         Email = client.Email,
                         Pass = client.Pass,
                         Gender = client.Gender,
