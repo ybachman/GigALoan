@@ -61,8 +61,8 @@ namespace GigALoan_Service
         List<DTO_SPRT_GigType> GetGigTypeByID(DTO_SPRT_GigType request);
 
         [OperationContract]
-        [WebInvoke(Method = "POST", UriTemplate = "/GetGigs", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
-        List<DTO_SPRT_GigType> GetGigs(DTO_SPRT_GigType request);
+        [WebInvoke(Method = "POST", UriTemplate = "/GetGigTypes", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        List<DTO_SPRT_GigType> GetGigTypes();
 
         [OperationContract]
         [WebInvoke(Method = "POST", UriTemplate = "/GetGigTypeByCategoryID", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
@@ -106,6 +106,6 @@ namespace GigALoan_Service
 
         [OperationContract]
         [WebInvoke(Method = "POST", UriTemplate = "/AddClient", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
-       DTO_CORE_Client AddClient(DTO_CORE_Client request);
+        DTO_CORE_Client AddClient(DTO_CORE_Client request);
     }
 }

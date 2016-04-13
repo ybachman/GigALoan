@@ -387,7 +387,7 @@ namespace GigALoan_Service
             return returnObject;
         }
 
-        public List<DTO_SPRT_GigType> GetGigs(DTO_SPRT_GigType request)
+        public List<DTO_SPRT_GigType> GetGigTypes()
         {
             List<DTO_SPRT_GigType> results = new List<DTO_SPRT_GigType>();
 
