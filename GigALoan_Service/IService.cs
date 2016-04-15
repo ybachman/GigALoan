@@ -107,5 +107,17 @@ namespace GigALoan_Service
         [OperationContract]
         [WebInvoke(Method = "POST", UriTemplate = "/AddClient", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         DTO_CORE_Client AddClient(DTO_CORE_Client request);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", UriTemplate = "/GetStudentByID", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        List<DTO_CORE_Student> GetStudentByID(DTO_CORE_Student request);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", UriTemplate = "/GetStudentByName", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        List<DTO_CORE_Student> GetStudentByName(DTO_CORE_Student request);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", UriTemplate = "/GetStudentByEmail", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        List<DTO_CORE_Student> GetStudentByEmail(DTO_CORE_Student request);
     }
 }
