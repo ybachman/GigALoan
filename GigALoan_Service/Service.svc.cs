@@ -11,15 +11,15 @@ namespace GigALoan_Service
     // NOTE: In order to launch WCF Test Client for testing this service, please select Service.svc or Service.svc.cs at the Solution Explorer and start debugging.
     public class Service : IService
     {
-        public List<DTO_CORE_GigAlert> FindAlertByID(DTO_CORE_GigAlert request)
+        public List<DTO_CORE_GigAlert> FindAlertByID()//DTO_CORE_GigAlert request)
         {
             var results = new List<DTO_CORE_GigAlert>();
 
             using (DB_connection context = new DB_connection())
             {
-                if (request != null)
+                //if (request != null)
                 {
-                    var alertList = context.CORE_GigAlerts.Where(ga => ga.AlertID == request.AlertID).ToList();
+                    var alertList = context.CORE_GigAlerts.Where(ga => ga.AlertID == 100).ToList();//request.AlertID).ToList();
 
                     foreach (var alert in alertList)
                     {
@@ -321,7 +321,8 @@ namespace GigALoan_Service
             {
                 List<DTO_SPRT_College> returnObject = new List<DTO_SPRT_College>();
 
-                var list = context.proc_GetColleges().ToList();
+                var list = context.SPRT_Colleges.ToList();
+                //var list = context.proc_GetColleges().ToList();
 
                 foreach (var entity in list)
                 {

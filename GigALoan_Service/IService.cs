@@ -11,7 +11,7 @@ namespace GigALoan_Service
     {
         [OperationContract]
         [WebInvoke(Method = "POST", UriTemplate = "/FindAlertByID", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
-        List<DTO_CORE_GigAlert> FindAlertByID(DTO_CORE_GigAlert request);
+        List<DTO_CORE_GigAlert> FindAlertByID();//DTO_CORE_GigAlert request);
 
         [OperationContract]
         [WebInvoke(Method = "POST", UriTemplate = "/FindAlertsByPay", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
