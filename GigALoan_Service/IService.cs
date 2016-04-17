@@ -11,7 +11,7 @@ namespace GigALoan_Service
     {
         [OperationContract]
         [WebInvoke(Method = "POST", UriTemplate = "/FindAlertByID", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
-        List<DTO_CORE_GigAlert> FindAlertByID();//DTO_CORE_GigAlert request);
+        List<DTO_CORE_GigAlert> FindAlertByID(DTO_CORE_GigAlert request);
 
         [OperationContract]
         [WebInvoke(Method = "POST", UriTemplate = "/FindAlertsByPay", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
@@ -61,8 +61,8 @@ namespace GigALoan_Service
         List<DTO_SPRT_GigType> GetGigTypeByID(DTO_SPRT_GigType request);
 
         [OperationContract]
-        [WebInvoke(Method = "POST", UriTemplate = "/GetGigTypes", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
-        List<DTO_SPRT_GigType> GetGigTypes();
+        [WebInvoke(Method = "POST", UriTemplate = "/GetGigs", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        List<DTO_SPRT_GigType> GetGigs(DTO_SPRT_GigType request);
 
         [OperationContract]
         [WebInvoke(Method = "POST", UriTemplate = "/GetGigTypeByCategoryID", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
@@ -87,37 +87,5 @@ namespace GigALoan_Service
         [OperationContract]
         [WebInvoke(Method = "POST", UriTemplate = "/CreateGig", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         List<DTO_CORE_Gig> CreateGig(DTO_CORE_Gig request);
-
-        [OperationContract]
-        [WebInvoke(Method = "POST", UriTemplate = "/GetClientByID", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
-        List<DTO_CORE_Client> GetClientByID(DTO_CORE_Client request);
-
-        [OperationContract]
-        [WebInvoke(Method = "POST", UriTemplate = "/GetClientByName", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
-        List<DTO_CORE_Client> GetClientByName(DTO_CORE_Client request);
-
-        [OperationContract]
-        [WebInvoke(Method = "POST", UriTemplate = "/GetClientByEmail", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
-        List<DTO_CORE_Client> GetClientByEmail(DTO_CORE_Client request);
-
-        [OperationContract]
-        [WebInvoke(Method = "POST", UriTemplate = "/AddStudent", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
-        DTO_CORE_Student AddStudent(DTO_CORE_Student request);
-
-        [OperationContract]
-        [WebInvoke(Method = "POST", UriTemplate = "/AddClient", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
-        DTO_CORE_Client AddClient(DTO_CORE_Client request);
-
-        [OperationContract]
-        [WebInvoke(Method = "POST", UriTemplate = "/GetStudentByID", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
-        List<DTO_CORE_Student> GetStudentByID(DTO_CORE_Student request);
-
-        [OperationContract]
-        [WebInvoke(Method = "POST", UriTemplate = "/GetStudentByName", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
-        List<DTO_CORE_Student> GetStudentByName(DTO_CORE_Student request);
-
-        [OperationContract]
-        [WebInvoke(Method = "POST", UriTemplate = "/GetStudentByEmail", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
-        List<DTO_CORE_Student> GetStudentByEmail(DTO_CORE_Student request);
     }
 }
