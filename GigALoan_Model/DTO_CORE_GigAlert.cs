@@ -31,19 +31,19 @@ namespace GigALoan_Model
         [DataMember]
         public double Lat { get; set; }
         
-        public DateTime DateCreated { get; set; }
-        [DataMember(Name = "DateCreated")]
-        private string CreationDateForSerialization { get; set; }
-        [OnSerializing]
-        void OnSerializing(StreamingContext context)
-        {
-            this.CreationDateForSerialization = JsonConvert.SerializeObject(this.DateCreated).Replace('"', ' ').Trim();
-        }
-        [OnDeserialized]
-        void OnDeserialized(StreamingContext context)
-        {
-            this.DateCreated = DateTime.Parse(this.CreationDateForSerialization);
-        }
+        //public DateTime DateCreated { get; set; }
+        //[DataMember(Name = "DateCreated")]
+        //private string CreationDateForSerialization { get; set; }
+        //[OnSerializing]
+        //void OnSerializing(StreamingContext context)
+        //{
+        //    this.CreationDateForSerialization = JsonConvert.SerializeObject(this.DateCreated).Replace('"', ' ').Trim();
+        //}
+        //[OnDeserialized]
+        //void OnDeserialized(StreamingContext context)
+        //{
+        //    this.DateCreated = DateTime.Parse(this.CreationDateForSerialization);
+        //}
 
         [DataMember]
         public bool Active { get; set; }

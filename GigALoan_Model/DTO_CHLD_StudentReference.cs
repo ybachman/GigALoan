@@ -15,8 +15,8 @@ namespace GigALoan_Model
         public int StudentID { get; set; }
         [DataMember]
         public int TypeID { get; set; }
-        [DataMember]
-        public DateTime DateAdded { get; set; }
+        //[DataMember]
+        //public DateTime DateAdded { get; set; }
         [DataMember]
         public string FirstName { get; set; }
         [DataMember]

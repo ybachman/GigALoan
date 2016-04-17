@@ -32,7 +32,7 @@ namespace GigALoan_Service
                             AlertID = alert.AlertID,
                             ClientID = alert.ClientID,
                             Comment = alert.Comment,
-                            DateCreated = alert.DateCreated,
+                            //DateCreated = alert.DateCreated,
                             Lat = alert.Lat,
                             Long = alert.Long,
                             PaymentAmt = alert.PaymentAmt,
@@ -65,7 +65,7 @@ namespace GigALoan_Service
                     Comment = alert.Comment,
                     Active = (bool)alert.Active,
                     ClientID = alert.ClientID,
-                    DateCreated = alert.DateCreated,
+                    //DateCreated = alert.DateCreated,
                     Lat = alert.Lat,
                     Long = alert.Long,
                     PaymentAmt = alert.PaymentAmt
@@ -95,7 +95,7 @@ namespace GigALoan_Service
                     Comment = alert.Comment,
                     Active = (bool)alert.Active,
                     ClientID = alert.ClientID,
-                    DateCreated = alert.DateCreated,
+                    //DateCreated = alert.DateCreated,
                     Lat = alert.Lat,
                     Long = alert.Long,
                     PaymentAmt = alert.PaymentAmt
@@ -123,12 +123,12 @@ namespace GigALoan_Service
                     GigID = gig.GigID,
                     StudentID = gig.StudentID,
                     AlertID = gig.AlertID,
-                    DateAccepted = gig.DateAccepted,
+                    //DateAccepted = gig.DateAccepted,
                     StudentComments = gig.StudentComments,
                     ClientComments = gig.ClientComments
                 };
-                if (gig.DateClosed != null)
-                    result.DateClosed = (DateTime)gig.DateClosed;
+                //if (gig.DateClosed != null)
+                //    result.DateClosed = (DateTime)gig.DateClosed;
                 if (gig.StudentRating != null)
                     result.StudentRating = (double)gig.StudentRating;
                 if (gig.ClientRating != null)
@@ -155,13 +155,13 @@ namespace GigALoan_Service
                     GigID = gig.GigID,
                     StudentID = gig.StudentID,
                     AlertID = gig.AlertID,
-                    DateAccepted = gig.DateAccepted,
+                    //DateAccepted = gig.DateAccepted,
                     StudentComments = gig.StudentComments,
                     ClientComments = gig.ClientComments
                 };
 
-                if (gig.DateClosed != null)
-                    result.DateClosed = (DateTime)gig.DateClosed;
+                //if (gig.DateClosed != null)
+                //    result.DateClosed = (DateTime)gig.DateClosed;
                 if (gig.StudentRating != null)
                     result.StudentRating = (double)gig.StudentRating;
                 if (gig.ClientRating != null)
@@ -187,13 +187,13 @@ namespace GigALoan_Service
                     GigID = gig.GigID,
                     StudentID = gig.StudentID,
                     AlertID = gig.AlertID,
-                    DateAccepted = gig.DateAccepted,
+                    //DateAccepted = gig.DateAccepted,
                     StudentComments = gig.StudentComments,
                     ClientComments = gig.ClientComments                    
                 };
 
-                if (gig.DateClosed != null)
-                    result.DateClosed = (DateTime)gig.DateClosed;
+                //if (gig.DateClosed != null)
+                //    result.DateClosed = (DateTime)gig.DateClosed;
                 if (gig.StudentRating != null)
                     result.StudentRating = (double)gig.StudentRating;
                 if (gig.ClientRating != null)
@@ -227,7 +227,7 @@ namespace GigALoan_Service
                         successfulMatchedStudent.StudentID = student.StudentID;
                         successfulMatchedStudent.FirstName = student.FirstName;
                         successfulMatchedStudent.LastName = student.LastName;
-                        successfulMatchedStudent.DateJoined = student.DateJoined;
+                        //successfulMatchedStudent.DateJoined = student.DateJoined;
                         successfulMatchedStudent.Email = student.Email;
                         successfulMatchedStudent.Pass = student.Pass;
                         successfulMatchedStudent.MajorID = student.MajorID;
@@ -503,31 +503,52 @@ namespace GigALoan_Service
 
             GigALoan_DAL.DB_connection context = new GigALoan_DAL.DB_connection();
 
-            string insertString = "IF ((SELECT Active FROM CORE_GigAlerts WHERE AlertID = " + request.AlertID + ") = 1) " +
-                "INSERT INTO CORE_Gigs(AlertID, DateAccepted, StudentID, ClientComments, StudentRating, ClientRating) VALUES(" +
-                request.AlertID + ", " + request.DateAccepted.ToString("yyyy-mm-dd") + ", " + request.StudentID + ", '" + request.ClientComments + "', 0, 0) " +
-                "UPDATE CORE_GigAlerts SET Active = 0 FROM CORE_GigAlerts WHERE AlertID = " + request.AlertID;
+            CORE_Gigs newgig = new CORE_Gigs
+            {
+                AlertID = request.AlertID,
+                StudentID = request.StudentID,
+                ClientComments = request.ClientComments,
+                StudentRating = 0,
+                ClientRating = 0
+            };
 
-            SqlConnection connection = new SqlConnection();
-            connection.ConnectionString = "Server=tcp:s05.winhost.com;Database=DB_42039_gig;User ID=DB_42039_gig_user;Password=gigaloan";
+            if (context.CORE_GigAlerts.Where(ga => ga.AlertID == request.AlertID).Single().Active == true)
+            {
+                context.CORE_Gigs.Add(newgig);
 
-            SqlCommand cmd = new SqlCommand(insertString, connection);
-            connection.Open();
-            cmd.ExecuteNonQuery();
-            connection.Close();
+                var alert = (from a in context.CORE_GigAlerts
+                             where a.AlertID == request.AlertID
+                             select a).Single();
 
-            var result = context.CORE_Gigs.Where(g => g.AlertID == request.AlertID).Single();
+                alert.Active = false;
+                context.SaveChanges();
+            }
+
+            //string insertString = "IF ((SELECT Active FROM CORE_GigAlerts WHERE AlertID = " + request.AlertID + ") = 1) " +
+            //    "INSERT INTO CORE_Gigs(AlertID, DateAccepted, StudentID, ClientComments, StudentRating, ClientRating) VALUES(" +
+            //    request.AlertID + ", " + request.DateAccepted.ToString("yyyy-mm-dd") + ", " + request.StudentID + ", '" + request.ClientComments + "', 0, 0) " +
+            //    "UPDATE CORE_GigAlerts SET Active = 0 FROM CORE_GigAlerts WHERE AlertID = " + request.AlertID;
+
+            //SqlConnection connection = new SqlConnection();
+            //connection.ConnectionString = "Server=tcp:s05.winhost.com;Database=DB_42039_gig;User ID=DB_42039_gig_user;Password=gigaloan";
+
+            //SqlCommand cmd = new SqlCommand(insertString, connection);
+            //connection.Open();
+            //cmd.ExecuteNonQuery();
+            //connection.Close();
+
+            //var result = context.CORE_Gigs.Where(g => g.AlertID == request.AlertID).Single();
 
             DTO_CORE_Gig gigToBeReturned = new DTO_CORE_Gig
             {
-                AlertID = result.AlertID,
-                ClientComments = result.ClientComments,
+                AlertID = newgig.AlertID,
+                ClientComments = newgig.ClientComments,
                 ClientRating = 0.0,
-                DateAccepted = result.DateAccepted,
-                DateClosed = Convert.ToDateTime(null),
-                GigID = result.GigID,
+                //DateAccepted = result.DateAccepted,
+                //DateClosed = Convert.ToDateTime(null),
+                GigID = newgig.GigID,
                 StudentComments = "",
-                StudentID = result.StudentID,
+                StudentID = newgig.StudentID,
                 StudentRating = 0.0
             };
 
@@ -538,5 +559,247 @@ namespace GigALoan_Service
             return returnObject;
         }
 
+        public List<DTO_CORE_Client> GetClientByID(DTO_CORE_Client request)
+        {
+
+            using (DB_connection context = new DB_connection())
+            {
+                var resultList = context.CORE_Clients.Where(client => client.ClientID == request.ClientID).ToList();
+                var result = new List<DTO_CORE_Client>();
+
+                foreach (var client in resultList)
+                {
+                    var clientByName = new DTO_CORE_Client
+                    {
+                        ClientID = client.ClientID,
+                        FirstName = client.FirstName,
+                        LastName = client.LastName,
+                        //DateJoined = client.DateJoined,
+                        Email = client.Email,
+                        Pass = client.Pass,
+                        Gender = client.Gender,
+                        PhoneNumber = client.PhoneNumber,
+                        Active = (bool)client.Active
+                    };
+                    result.Add(clientByName);
+                }
+
+                return result;
+            }
+
+        }//end method GetClientById
+
+        //method used to get a client by their name
+        public List<DTO_CORE_Client> GetClientByName(DTO_CORE_Client request)
+        {
+            using (DB_connection context = new DB_connection())
+            {
+                var resultList = context.CORE_Clients.Where(client => client.FirstName == request.FirstName &&
+                                                           client.LastName == request.LastName).ToList();//FirstOrDefault();
+
+                var result = new List<DTO_CORE_Client>();
+
+                foreach (var client in resultList)
+                {
+                    var clientByName = new DTO_CORE_Client
+                    {
+                        ClientID = client.ClientID,
+                        FirstName = client.FirstName,
+                        LastName = client.LastName,
+                        //DateJoined = client.DateJoined,
+                        Email = client.Email,
+                        Pass = client.Pass,
+                        Gender = client.Gender,
+                        PhoneNumber = client.PhoneNumber,
+                        Active = (bool)client.Active
+                    };
+                    result.Add(clientByName);
+                }
+                return result;
+            }
+        }//end method GetClientByEmail
+
+        //method used to get a client by their email
+        public List<DTO_CORE_Client> GetClientByEmail(DTO_CORE_Client request)
+        {
+            using (DB_connection context = new DB_connection())
+            {
+                var resultList = context.CORE_Clients.Where(client => client.Email == request.Email).ToList();
+
+                var result = new List<DTO_CORE_Client>();
+
+                foreach (var client in resultList)
+                {
+                    var clientByName = new DTO_CORE_Client
+                    {
+                        ClientID = client.ClientID,
+                        FirstName = client.FirstName,
+                        LastName = client.LastName,
+                        //DateJoined = client.DateJoined,
+                        Email = client.Email,
+                        Pass = client.Pass,
+                        Gender = client.Gender,
+                        PhoneNumber = client.PhoneNumber,
+                        Active = (bool)client.Active
+                    };
+                    result.Add(clientByName);
+                }
+
+                return result;
+            }
+        }//end method GetClientByEmail
+
+        //method used to add a client to th
+        public DTO_CORE_Client AddClient(DTO_CORE_Client request)
+        {
+            using (DB_connection context = new DB_connection())
+            {
+                var outputParameter = new System.Data.Entity.Core.Objects.ObjectParameter("new_identity", typeof(int));
+
+                var id = context.proc_AddClient(request.FirstName, request.LastName, request.Email,
+                     request.Pass, request.Gender, request.PhoneNumber, outputParameter);
+
+                id = (int)outputParameter.Value;
+
+                if (id == -1)
+                {
+                    return null;//client is already in the system
+                }
+                else if (id >= 1)
+                {
+                    return request;
+                }
+                else
+                {
+                    //issue adding client
+                    return null;
+                }
+            }
+        }//end method AddClient 
+
+        public DTO_CORE_Student AddStudent(DTO_CORE_Student request)
+        {
+            using (DB_connection context = new DB_connection())
+            {
+                var outputParameter = new System.Data.Entity.Core.Objects.ObjectParameter("new_identity", typeof(int));
+
+                var id = context.proc_AddStudent(request.FirstName, request.LastName,
+                request.Email, request.Pass, request.MajorID, request.CollegeID,
+                request.Gender, request.Employed, request.Employer, request.PhoneNumber,
+                outputParameter);
+
+                id = (int)outputParameter.Value;
+
+                if (id == -1)
+                {
+                    return null;//client is already in the system
+                }
+                else if (id >= 1)
+                {
+                    return request;
+                }
+                else
+                {
+                    //issue adding client
+                    return null;
+                }
+            }
+        }//end method AddStudent 
+
+        public List<DTO_CORE_Student> GetStudentByID(DTO_CORE_Student request)
+        {
+            using (DB_connection context = new DB_connection())
+            {
+                var resultList = context.CORE_Students.Where(student => student.StudentID == request.StudentID).ToList();
+                var result = new List<DTO_CORE_Student>();
+
+                foreach (var student in resultList)
+                {
+                    var studentByID = new DTO_CORE_Student
+                    {
+                        StudentID = student.StudentID,
+                        FirstName = student.FirstName,
+                        LastName = student.LastName,
+                        Email = student.Email,
+                        Employed = (bool)student.Employed,
+                        Employer = student.Employer,
+                        MajorID = student.MajorID,
+                        CollegeID = student.CollegeID,
+                        Pass = student.Pass,
+                        Gender = student.Gender,
+                        PhoneNumber = student.PhoneNumber,
+                        Active = (bool)student.Active
+                    };
+                    result.Add(studentByID);
+                }
+
+                return result;
+            }
+        }
+
+        public List<DTO_CORE_Student> GetStudentByName(DTO_CORE_Student request)
+        {
+            //Create a list of type DTO_CORE_Student
+            using (DB_connection context = new DB_connection())
+            {
+
+                var resultList = context.CORE_Students.Where(student => student.LastName == request.LastName || student.FirstName == student.FirstName); //Needs to also recognize a full name (Firt Last and Last First)
+                var result = new List<DTO_CORE_Student>();
+
+                foreach (var student in resultList)
+                {
+                    var studentByName = new DTO_CORE_Student
+                    {
+                        StudentID = student.StudentID,
+                        FirstName = student.FirstName,
+                        LastName = student.LastName,
+                        Email = student.Email,
+                        Employed = (bool)student.Employed,
+                        Employer = student.Employer,
+                        MajorID = student.MajorID,
+                        CollegeID = student.CollegeID,
+                        Pass = student.Pass,
+                        Gender = student.Gender,
+                        PhoneNumber = student.PhoneNumber,
+                        Active = (bool)student.Active
+                    };
+                    result.Add(studentByName);
+                }
+
+                return result;
+            }
+        }
+
+        public List<DTO_CORE_Student> GetStudentByEmail(DTO_CORE_Student request)
+        {
+            //Create a list of type DTO_CORE_Student
+            using (DB_connection context = new DB_connection())
+            {
+
+                var resultList = context.CORE_Students.Where(student => student.Email == request.Email || student.Email.Contains(request.Email)).ToList();
+                var result = new List<DTO_CORE_Student>();
+
+                foreach (var student in resultList)
+                {
+                    var studentByEmail = new DTO_CORE_Student
+                    {
+                        StudentID = student.StudentID,
+                        FirstName = student.FirstName,
+                        LastName = student.LastName,
+                        Email = student.Email,
+                        Employed = (bool)student.Employed,
+                        Employer = student.Employer,
+                        MajorID = student.MajorID,
+                        CollegeID = student.CollegeID,
+                        Pass = student.Pass,
+                        Gender = student.Gender,
+                        PhoneNumber = student.PhoneNumber,
+                        Active = (bool)student.Active
+                    };
+                    result.Add(studentByEmail);
+                }
+                return result;
+            }
+        }
     }
 }
