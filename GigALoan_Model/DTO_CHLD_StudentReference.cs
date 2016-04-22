@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Runtime.Serialization;
 
 namespace GigALoan_Model
@@ -15,8 +16,26 @@ namespace GigALoan_Model
         public int StudentID { get; set; }
         [DataMember]
         public int TypeID { get; set; }
-        //[DataMember]
-        //public DateTime DateAdded { get; set; }
+        
+        public DateTime DateAdded { get; set; }
+        [DataMember(Name = "DateAdded")]
+        private string CreationDateForSerialization { get; set; }
+
+        [OnSerializing]
+        void OnSerializing(StreamingContext context)
+        {
+
+            this.CreationDateForSerialization = JsonConvert.SerializeObject(this.DateAdded).Replace('"', ' ').Trim();
+
+
+        }
+
+        [OnDeserialized]
+        void OnDeserialized(StreamingContext context)
+        {
+            if (this.CreationDateForSerialization != null)
+                this.DateAdded = DateTime.Parse(this.CreationDateForSerialization);
+        }
         [DataMember]
         public string FirstName { get; set; }
         [DataMember]

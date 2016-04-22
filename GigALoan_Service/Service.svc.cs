@@ -7,6 +7,8 @@ using System.Text;
 using GigALoan_Model;
 using GigALoan_DAL;
 using System.Data.SqlClient;
+using System.IO;
+using System.Net;
 
 namespace GigALoan_Service
 {
@@ -14,6 +16,8 @@ namespace GigALoan_Service
     // NOTE: In order to launch WCF Test Client for testing this service, please select Service.svc or Service.svc.cs at the Solution Explorer and start debugging.
     public class Service : IService
     {
+        private const string FTPURLBASE = "ftp://jumpcreek.com/";
+
         public List<DTO_CORE_GigAlert> FindAlertByID(DTO_CORE_GigAlert request)
         {
             List<DTO_CORE_GigAlert> results = new List<DTO_CORE_GigAlert>();
@@ -32,7 +36,7 @@ namespace GigALoan_Service
                             AlertID = alert.AlertID,
                             ClientID = alert.ClientID,
                             Comment = alert.Comment,
-                            //DateCreated = alert.DateCreated,
+                            DateCreated = alert.DateCreated,
                             Lat = alert.Lat,
                             Long = alert.Long,
                             PaymentAmt = alert.PaymentAmt,
@@ -44,7 +48,12 @@ namespace GigALoan_Service
                 }
             }
 
-            return results;
+            if (request == null)
+                return new List<DTO_CORE_GigAlert> { new DTO_CORE_GigAlert { Comment = "empty request" } };
+            else if (results.Count == 0)
+                return new List<DTO_CORE_GigAlert> { new DTO_CORE_GigAlert { Comment = "empty response" } };
+            else
+                return results;
         }
 
         public List<DTO_CORE_GigAlert> FindAlertsByPay(DTO_CORE_GigAlert request)
@@ -65,7 +74,7 @@ namespace GigALoan_Service
                     Comment = alert.Comment,
                     Active = (bool)alert.Active,
                     ClientID = alert.ClientID,
-                    //DateCreated = alert.DateCreated,
+                    DateCreated = alert.DateCreated,
                     Lat = alert.Lat,
                     Long = alert.Long,
                     PaymentAmt = alert.PaymentAmt
@@ -74,7 +83,12 @@ namespace GigALoan_Service
                 results.Add(result);
             }
 
-            return results;
+            if(request == null)
+                return new List<DTO_CORE_GigAlert> { new DTO_CORE_GigAlert { Comment = "empty request" } };
+            else if (results.Count == 0)
+                return new List<DTO_CORE_GigAlert> { new DTO_CORE_GigAlert { Comment = "empty response" } };
+            else
+                return results;
         }
 
         public List<DTO_CORE_GigAlert> FindAlertsByType(DTO_CORE_GigAlert request)
@@ -95,7 +109,7 @@ namespace GigALoan_Service
                     Comment = alert.Comment,
                     Active = (bool)alert.Active,
                     ClientID = alert.ClientID,
-                    //DateCreated = alert.DateCreated,
+                    DateCreated = alert.DateCreated,
                     Lat = alert.Lat,
                     Long = alert.Long,
                     PaymentAmt = alert.PaymentAmt
@@ -123,12 +137,12 @@ namespace GigALoan_Service
                     GigID = gig.GigID,
                     StudentID = gig.StudentID,
                     AlertID = gig.AlertID,
-                    //DateAccepted = gig.DateAccepted,
+                    DateAccepted = gig.DateAccepted,
                     StudentComments = gig.StudentComments,
                     ClientComments = gig.ClientComments
                 };
-                //if (gig.DateClosed != null)
-                //    result.DateClosed = (DateTime)gig.DateClosed;
+                if (gig.DateClosed != null)
+                    result.DateClosed = (DateTime)gig.DateClosed;
                 if (gig.StudentRating != null)
                     result.StudentRating = (double)gig.StudentRating;
                 if (gig.ClientRating != null)
@@ -155,13 +169,13 @@ namespace GigALoan_Service
                     GigID = gig.GigID,
                     StudentID = gig.StudentID,
                     AlertID = gig.AlertID,
-                    //DateAccepted = gig.DateAccepted,
+                    DateAccepted = gig.DateAccepted,
                     StudentComments = gig.StudentComments,
                     ClientComments = gig.ClientComments
                 };
 
-                //if (gig.DateClosed != null)
-                //    result.DateClosed = (DateTime)gig.DateClosed;
+                if (gig.DateClosed != null)
+                    result.DateClosed = (DateTime)gig.DateClosed;
                 if (gig.StudentRating != null)
                     result.StudentRating = (double)gig.StudentRating;
                 if (gig.ClientRating != null)
@@ -187,13 +201,13 @@ namespace GigALoan_Service
                     GigID = gig.GigID,
                     StudentID = gig.StudentID,
                     AlertID = gig.AlertID,
-                    //DateAccepted = gig.DateAccepted,
+                    DateAccepted = gig.DateAccepted,
                     StudentComments = gig.StudentComments,
                     ClientComments = gig.ClientComments                    
                 };
 
-                //if (gig.DateClosed != null)
-                //    result.DateClosed = (DateTime)gig.DateClosed;
+                if (gig.DateClosed != null)
+                    result.DateClosed = (DateTime)gig.DateClosed;
                 if (gig.StudentRating != null)
                     result.StudentRating = (double)gig.StudentRating;
                 if (gig.ClientRating != null)
@@ -227,7 +241,7 @@ namespace GigALoan_Service
                         successfulMatchedStudent.StudentID = student.StudentID;
                         successfulMatchedStudent.FirstName = student.FirstName;
                         successfulMatchedStudent.LastName = student.LastName;
-                        //successfulMatchedStudent.DateJoined = student.DateJoined;
+                        successfulMatchedStudent.DateJoined = student.DateJoined;
                         successfulMatchedStudent.Email = student.Email;
                         successfulMatchedStudent.Pass = student.Pass;
                         successfulMatchedStudent.MajorID = student.MajorID;
@@ -274,7 +288,7 @@ namespace GigALoan_Service
                         successfulMatchedClient.ClientID = client.ClientID;
                         successfulMatchedClient.FirstName = client.FirstName;
                         successfulMatchedClient.LastName = client.LastName;
-                        //successfulMatchedClient.DateJoined = client.DateJoined;
+                        successfulMatchedClient.DateJoined = client.DateJoined;
                         successfulMatchedClient.Email = client.Email;
                         successfulMatchedClient.Pass = client.Pass;
                         successfulMatchedClient.Gender = client.Gender;
@@ -511,7 +525,7 @@ namespace GigALoan_Service
                 StudentRating = 0,
                 ClientRating = 0
             };
-
+            
             if (context.CORE_GigAlerts.Where(ga => ga.AlertID == request.AlertID).Single().Active == true)
             {
                 context.CORE_Gigs.Add(newgig);
@@ -544,8 +558,8 @@ namespace GigALoan_Service
                 AlertID = newgig.AlertID,
                 ClientComments = newgig.ClientComments,
                 ClientRating = 0.0,
-                //DateAccepted = result.DateAccepted,
-                //DateClosed = Convert.ToDateTime(null),
+                DateAccepted = newgig.DateAccepted,
+                DateClosed = Convert.ToDateTime(null),
                 GigID = newgig.GigID,
                 StudentComments = "",
                 StudentID = newgig.StudentID,
@@ -574,7 +588,7 @@ namespace GigALoan_Service
                         ClientID = client.ClientID,
                         FirstName = client.FirstName,
                         LastName = client.LastName,
-                        //DateJoined = client.DateJoined,
+                        DateJoined = client.DateJoined,
                         Email = client.Email,
                         Pass = client.Pass,
                         Gender = client.Gender,
@@ -606,7 +620,7 @@ namespace GigALoan_Service
                         ClientID = client.ClientID,
                         FirstName = client.FirstName,
                         LastName = client.LastName,
-                        //DateJoined = client.DateJoined,
+                        DateJoined = client.DateJoined,
                         Email = client.Email,
                         Pass = client.Pass,
                         Gender = client.Gender,
@@ -635,7 +649,7 @@ namespace GigALoan_Service
                         ClientID = client.ClientID,
                         FirstName = client.FirstName,
                         LastName = client.LastName,
-                        //DateJoined = client.DateJoined,
+                        DateJoined = client.DateJoined,
                         Email = client.Email,
                         Pass = client.Pass,
                         Gender = client.Gender,
@@ -649,7 +663,7 @@ namespace GigALoan_Service
             }
         }//end method GetClientByEmail
 
-        //method used to add a client to th
+        //method used to add a client to the DB
         public DTO_CORE_Client AddClient(DTO_CORE_Client request)
         {
             using (DB_connection context = new DB_connection())
@@ -799,6 +813,84 @@ namespace GigALoan_Service
                     result.Add(studentByEmail);
                 }
                 return result;
+            }
+        }
+
+        public DTO_CHLD_StudentImage AddStudentImage(DTO_Image request)
+        {
+            byte[] imageBytes = Convert.FromBase64String(request.ImageBytes);
+
+            Stream fileStream = new MemoryStream(imageBytes);
+
+            using (var context = new DB_connection())
+            {
+                var student = context.CORE_Students.FirstOrDefault(s => s.StudentID == request.OwnerID);
+
+                if (student == null)
+                    return null;
+
+                var result = new DTO_CHLD_StudentImage
+                {
+                    ImageName = request.ImageName,
+                    ImageURL = FTPURLBASE,
+                    ImageUUID = Guid.NewGuid().ToString(),
+                    StudentID = request.OwnerID
+                };
+
+                try
+                {
+                    var ftpRequest = (FtpWebRequest)WebRequest.Create(result.ImageURL + result.ImageUUID + result.ImageName);
+                    ftpRequest.Method = WebRequestMethods.Ftp.UploadFile;
+
+                    ftpRequest.Credentials = new NetworkCredential("jumpcree_gigaloan", "gigaloan");
+
+                    using (Stream ftpStream = ftpRequest.GetRequestStream())
+                    {
+                        int length = 1024;
+                        byte[] buffer = new byte[length];
+                        int bytesRead = 0;
+
+                        do
+                        {
+                            bytesRead = fileStream.Read(buffer, 0, length);
+                            ftpStream.Write(buffer, 0, bytesRead);
+                        } while (bytesRead != 0);
+                    }
+                }
+                catch (WebException e)
+                {
+                    return null;
+                }
+
+                result.ImageURL += "images/"; //long story....
+
+                context.proc_AddStudentImage(result.StudentID, result.ImageURL, result.ImageUUID, result.ImageName);
+                context.SaveChanges();
+
+                return result;
+            }
+        }
+
+        public List<DTO_CHLD_StudentImage> GetStudentImages(DTO_CORE_Student request)
+        {
+            using (var context = new DB_connection())
+            {
+                var imageList = context.proc_GetStudentImages(request.StudentID).ToList();
+
+                List<DTO_CHLD_StudentImage> results = new List<DTO_CHLD_StudentImage>();
+
+                foreach(var image in imageList)
+                {
+                    results.Add(new DTO_CHLD_StudentImage
+                    {
+                        ImageID = image.ImageID,
+                        ImageName = image.ImageName,
+                        ImageURL = image.ImageURL,
+                        ImageUUID = image.ImageUUID
+                    });
+                }
+
+                return results;
             }
         }
     }

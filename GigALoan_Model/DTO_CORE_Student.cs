@@ -17,20 +17,20 @@ namespace GigALoan_Model
         public string FirstName { get; set; }
         [DataMember]
         public string LastName { get; set; }
-        
-        //public DateTime DateJoined { get; set; }
-        //[DataMember(Name = "DateJoined")]
-        //private string CreationDateForSerialization { get; set; }
-        //[OnSerializing]
-        //void OnSerializing(StreamingContext context)
-        //{
-        //    this.CreationDateForSerialization = JsonConvert.SerializeObject(this.DateJoined).Replace('"', ' ').Trim();
-        //}
-        //[OnDeserialized]
-        //void OnDeserialized(StreamingContext context)
-        //{
-        //    this.DateJoined = DateTime.Parse(this.CreationDateForSerialization);
-        //}
+
+        public DateTime DateJoined { get; set; }
+        [DataMember(Name = "DateJoined")]
+        private string CreationDateForSerialization { get; set; }
+        [OnSerializing]
+        void OnSerializing(StreamingContext context)
+        {
+            this.CreationDateForSerialization = JsonConvert.SerializeObject(this.DateJoined).Replace('"', ' ').Trim();
+        }
+        [OnDeserialized]
+        void OnDeserialized(StreamingContext context)
+        {
+            this.DateJoined = DateTime.Parse(this.CreationDateForSerialization);
+        }
         [DataMember]
         public string Email { get; set; }
         [DataMember]

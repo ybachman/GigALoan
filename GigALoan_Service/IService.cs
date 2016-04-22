@@ -119,5 +119,13 @@ namespace GigALoan_Service
         [OperationContract]
         [WebInvoke(Method = "POST", UriTemplate = "/GetStudentByEmail", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         List<DTO_CORE_Student> GetStudentByEmail(DTO_CORE_Student request);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", UriTemplate = "/AddStudentImage", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        DTO_CHLD_StudentImage AddStudentImage(DTO_Image request);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", UriTemplate = "/GetStudentImages", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        List<DTO_CHLD_StudentImage> GetStudentImages(DTO_CORE_Student request);
     }
 }

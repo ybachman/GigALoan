@@ -56,6 +56,7 @@
     <Compile Include="DTO_CORE_Gig.cs" />
     <Compile Include="DTO_CORE_GigAlert.cs" />
     <Compile Include="DTO_CORE_Student.cs" />
+    <Compile Include="DTO_Image.cs" />
     <Compile Include="DTO_LOG_Events.cs" />
     <Compile Include="DTO_SPRT_College.cs" />
     <Compile Include="DTO_SPRT_GigCategory.cs" />

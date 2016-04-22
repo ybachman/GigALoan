@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace GigALoan_Model
 {
@@ -28,8 +29,24 @@ namespace GigALoan_Model
 
         [DataMember]
         public int LogID { get; set; }
-        [DataMember]
+        
         public DateTime DateLogged { get; set; }
+        [DataMember(Name = "DateLogged")]
+        private string CreationDateForSerialization { get; set; }
+
+        [OnSerializing]
+        void OnSerializing(StreamingContext context)
+        {
+
+            this.CreationDateForSerialization = JsonConvert.SerializeObject(this.DateLogged).Replace('"', ' ').Trim();
+        }
+
+        [OnDeserialized]
+        void OnDeserialized(StreamingContext context)
+        {
+            if (this.CreationDateForSerialization != null)
+                this.DateLogged = DateTime.Parse(this.CreationDateForSerialization);
+        }
         [DataMember]
         public string LogMessage { get; set; }
     }
